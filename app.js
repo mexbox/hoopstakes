@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var checkJwt = require('./jwtAuth.js');
-var connection = require('./dbConnection');
+var checkJwt = require('./helpers/jwtAuth.js');
+var connection = require('./helpers/dbConnection');
 
 var users = require('./routes/users');
 
