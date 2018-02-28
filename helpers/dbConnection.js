@@ -5,6 +5,7 @@ const connection = new Sequelize('hoopstakes', 'root', 'password', {
     dialect: 'mysql',
     port: 3306,
     operatorsAliases: false,
+    socketPath: '/var/run/mysqld/mysqld.sock',
     logging( str ) {
         if( /connection/.test( str ) ){
             debug( str );
