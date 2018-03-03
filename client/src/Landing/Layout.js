@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+
+const styles = {
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    height: '100vh',
+    paddingTop:'5%'
+  },
+};
 
 class Landing extends Component {
-    constructor(props) {
-      super(props);
-    }
   
     render() {
       return (
-        <div style={{textAlign: 'center'}}>
+        <div style={{textAlign: 'center'}} className={this.props.classes.root}>
+          <Typography variant="title" color="inherit" noWrap>Hoopstakes</Typography>
           <div>
-            <img src="https://media1.tenor.com/images/e5b8c650ed7911a48b6d0242f326f73c/tenor.gif" />
+            <img alt="basketball-fail" src="https://media1.tenor.com/images/e5b8c650ed7911a48b6d0242f326f73c/tenor.gif" />
           </div>
 
           <Button variant="raised" color="primary" aria-label="login" onClick={this.props.logIn}>Log In</Button>
@@ -19,4 +27,4 @@ class Landing extends Component {
     }
 }  
 
-export default Landing;
+export default withStyles(styles)(Landing);
