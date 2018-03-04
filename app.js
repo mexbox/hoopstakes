@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //API routes
-app.use('/api/users', checkJwt, users);
+app.use('/api/users', users);
 
 //React App
 app.get('*', (req, res) => {
