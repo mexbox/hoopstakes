@@ -4,7 +4,8 @@ import Landing from './Landing/Layout';
 
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import red from 'material-ui/colors/red';
-const theme = createMuiTheme({
+import blueGrey from 'material-ui/colors/blueGrey';
+const dashboardTheme = createMuiTheme({
   palette: {
     primary: red,
     type: 'dark',
@@ -26,7 +27,7 @@ class App extends Component {
     const { isAuthenticated } = this.props.auth;
     const getDasboard = function(logoutFn) {
       return (
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider theme={dashboardTheme}>
           <Dashboard logOut={logoutFn} />
         </MuiThemeProvider>
       );

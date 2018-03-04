@@ -45,6 +45,6 @@ class Topbar extends React.Component {
 Topbar.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-  };
+};
   
 export default withStyles(styles, { withTheme: true })(Topbar);
