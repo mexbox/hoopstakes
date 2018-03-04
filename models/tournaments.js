@@ -1,4 +1,7 @@
-'use strict';
+// 'use strict';
+const Sequelize = require('sequelize');
+const connection = require('../helpers/dbConnection');
+
 module.exports = (sequelize, DataTypes) => {
   var Tournaments = sequelize.define('Tournaments', {
     name: DataTypes.STRING,

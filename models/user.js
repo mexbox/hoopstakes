@@ -1,6 +1,6 @@
 'use strict';
+const Sequelize = require('sequelize');
 const connection = require('../helpers/dbConnection');
-const Sequelize = require( 'sequelize' );
 
 var User = connection.define('User', {
   firstName: Sequelize.STRING,
