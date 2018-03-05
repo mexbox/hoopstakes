@@ -9,7 +9,7 @@ export default class Auth {
       responseType: 'token id_token',
       audience: 'https://api.hoopestakes.com',
       params: {
-        scope: 'openid'
+        scope: 'openid profile'
       }
     },
     languageDictionary: {
@@ -42,17 +42,23 @@ export default class Auth {
   }
 
   setSession(authResult) {
-    setTimeout(function(){
       if (authResult && authResult.accessToken && authResult.idToken) {
         // Set the time that the access token will expire at
         let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
+
+        //get user profile
+        this.lock.getUserInfo(authResult.accessToken, function(error, profile) {
+          if (!error) {
+            localStorage.setItem('user_profile', JSON.stringify(profile));
+          }
+        });
+
         // navigate to the home route
         history.replace('/');
       }
-    }, 2000);
   }
 
   logout() {
@@ -60,6 +66,7 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('user_profile');
     // navigate to the home route
     history.replace('/');
   }
