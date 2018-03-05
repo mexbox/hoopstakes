@@ -68,7 +68,7 @@ class NbaTeams extends React.Component {
             <div className={classes.root}>
                 {teams.map( (team) => {
                     return (
-                        <ExpansionPanel>
+                        <ExpansionPanel key={team.name}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <img src={team.logo} className={classNames(classes.teamLogo)} />
                                 <Typography className={classNames(classes.teamName)}>{team.name}</Typography>
