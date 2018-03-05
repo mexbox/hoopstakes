@@ -39,21 +39,6 @@ const styles = theme => ({
 class Layout extends React.Component {
   state = {};
 
-  componentDidMount() {
-    fetch('http://localhost:3000/api/users', {
-      headers: {
-      'authorization': `Bearer ${localStorage.getItem('access_token')}`,
-      'content-type': 'application/json'
-      }
-    },).then((results) => {
-      return results.json()
-    }).then((results) => {
-      console.log(results);
-    }).catch((err)=>{
-      console.log(err);
-    });
-  }
-
   render() {
     const { classes } = this.props;
 
