@@ -3,12 +3,12 @@ import Dashboard from './Dashboard/Layout';
 import Landing from './Landing/Layout';
 
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
-import red from 'material-ui/colors/red';
+import orange from 'material-ui/colors/orange';
 import blueGrey from 'material-ui/colors/blueGrey';
 const dashboardTheme = createMuiTheme({
   palette: {
-    primary: red,
-    type: 'dark',
+    primary: orange,
+    type: 'light',
   },
 });
 

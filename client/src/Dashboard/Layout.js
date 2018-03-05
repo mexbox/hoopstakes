@@ -32,7 +32,10 @@ const styles = theme => ({
   },
 
   tournementContainer: {
-    padding: '5% 25% 5% 25%'
+    marginTop: '50px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: '800px',
   }
 });
 

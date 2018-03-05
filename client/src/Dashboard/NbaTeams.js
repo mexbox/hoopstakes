@@ -100,8 +100,8 @@ class NbaTeams extends React.Component {
                     centered
                     fullWidth
                     >
-                        <Tab label="Eastern Conference" />
-                        <Tab label="Western Conference" />
+                        <Tab label="EAST" />
+                        <Tab label="WEST" />
                   </Tabs>
                 </Paper>
                 <br />
