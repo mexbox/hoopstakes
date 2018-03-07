@@ -5,10 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var checkJwt = require('./helpers/jwtAuth.js');
-var connection = require('./helpers/dbConnection');
+var connection = require('./models/dbConnection');
 
 var users = require('./routes/users');
 var nbaTeams = require('./routes/nbaTeams');
+var tournements = require('./routes/tournements');
 
 var app = express();
 // view engine setup
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //API routes
 app.use('/api/users', users);
-app.use('/api/teams', nbaTeams);
+app.use('/api/nba-teams', nbaTeams);
+app.use('/api/tournements', tournements);
 
 //React App
 app.get('*', (req, res) => {
