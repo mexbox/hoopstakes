@@ -32,9 +32,9 @@ module.exports = {
           }
         });
 
-        await queryInterface.bulkInsert('NbaTeams', eastTeams, {});
+        await queryInterface.bulkInsert('NbaTeams', east, {});
         
-        return queryInterface.bulkInsert('NbaTeams', westTeams, {});
+        return queryInterface.bulkInsert('NbaTeams', west, {});
       } catch ( e ) {
         console.log( e );
       }

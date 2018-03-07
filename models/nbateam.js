@@ -10,8 +10,8 @@ var NbaTeam = connection.define('NbaTeam', {
   description: Sequelize.STRING
 }, {});
 
-Team.associate = function(models) {
+NbaTeam.associate = function(models) {
   // associations can be defined here
 };
 
-module.exports = Team;
+module.exports = NbaTeam;

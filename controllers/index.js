@@ -1,7 +1,7 @@
 const users = require('./users');
-const teams = require('./teams');
+const nbaTeams = require('./nbaTeams');
 
 module.exports = {
   users,
-  teams
+  nbaTeams
 };
