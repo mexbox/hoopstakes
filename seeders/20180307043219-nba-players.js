@@ -4,10 +4,10 @@ const axios = require("axios");
 
 const getImageUrl = (playerName) => {
   const nameArr = playerName.split(' ');
-  const firstName = nameArr[0];
+  const firstName = nameArr[0].replace("'","").replace(".","");
 
   nameArr.shift();
-  const lastName = nameArr.join('_');
+  const lastName = nameArr.join('_').replace("'","").replace(".","");
 
   return `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
 }

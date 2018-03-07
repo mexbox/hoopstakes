@@ -45,6 +45,16 @@ class NbaTeams extends React.Component {
         this.setState({ conference: value });
     };
 
+    getTeamLogo = (name) => {
+        const nameArr = name.split(' ');
+        let shortName = nameArr[nameArr.length-1].toLowerCase();
+        if(shortName.indexOf('7') > -1){
+            shortName = 'sixers';
+        }
+
+        return teamLogos[shortName] || '';
+    }
+
     getTeams(conferenceIndex) {
         const conference = conferenceIndex === 0 ? 'east' : 'west';
         const teams = this.state.teams[conference];
@@ -52,11 +62,12 @@ class NbaTeams extends React.Component {
 
         return (
             <div className={classes.root}>
-                {teams && teams.map( (team) => {
+                {teams && teams.map( (team) => { 
+                    team.logo = this.getTeamLogo(team.name)
                     return (
                         <ExpansionPanel key={team.name}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                {/* <img src={team.logo} className={classNames(classes.teamLogo)} /> */}
+                                { team.logo && <img src={team.logo} className={classNames(classes.teamLogo)} /> }
                                 <Typography className={classNames(classes.teamName)}>{team.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>

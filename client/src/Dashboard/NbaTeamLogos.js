@@ -1,7 +1,7 @@
 import celtics from '../assets/images/teamlogos/celtics.png'
 import blazers from '../assets/images/teamlogos/blazers.png'
 import bucks from '../assets/images/teamlogos/bucks.png'
-import cavs from '../assets/images/teamlogos/cavs.png'
+import cavaliers from '../assets/images/teamlogos/cavs.png'
 import heat from '../assets/images/teamlogos/heat.png'
 import nuggets from '../assets/images/teamlogos/nuggets.png'
 import pacers from '../assets/images/teamlogos/pacers.png'
@@ -13,7 +13,7 @@ import spurs from '../assets/images/teamlogos/spurs.png'
 import thunder from '../assets/images/teamlogos/thunder.png'
 import warriors from '../assets/images/teamlogos/warriors.png'
 import wizards from '../assets/images/teamlogos/wizards.png'
-import wolves from '../assets/images/teamlogos/wolves.png'
+import timberwolves from '../assets/images/teamlogos/wolves.png'
 
 
 
@@ -21,7 +21,7 @@ const teamLogos = {
     celtics,
     blazers,
     bucks,
-    cavs,
+    cavaliers,
     heat,
     nuggets,
     pacers,
@@ -33,6 +33,6 @@ const teamLogos = {
     thunder,
     warriors,
     wizards,
-    wolves
+    timberwolves
 }
 export default teamLogos
