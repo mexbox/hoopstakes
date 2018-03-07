@@ -17,6 +17,9 @@ module.exports = {
       conference: {
         type: Sequelize.STRING
       },
+      rank: {
+        type: Sequelize.INTEGER
+      },
       logo: {
         type: Sequelize.STRING
       },
