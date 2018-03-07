@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var debug = require('debug')('hoopstakes:teams');
 const teamController = require('../controllers/nbaTeams');
-debug('teams...');
+
 /* GET teams listing */
 router.get('/', teamController.list);
 
