@@ -3,7 +3,7 @@ var router = express.Router();
 var debug = require('debug')('hoopstakes:users');
 const userController = require('../controllers').users;
 
-/* GET users listing. */
+/* GET users listing */
 router.get('/', userController.list);
 
 // router.get('/', function(req, res, next) {

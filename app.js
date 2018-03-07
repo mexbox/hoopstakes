@@ -8,6 +8,7 @@ var checkJwt = require('./helpers/jwtAuth.js');
 var connection = require('./helpers/dbConnection');
 
 var users = require('./routes/users');
+var teams = require('./routes/teams');
 
 var app = express();
 // view engine setup
@@ -25,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //API routes
 app.use('/api/users', users);
+app.use('/api/refresh-teams', teams);
+app.use('/api/teams', teams);
 
 //React App
 app.get('*', (req, res) => {
