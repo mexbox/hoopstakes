@@ -36,6 +36,6 @@ module.exports = {
     return queryInterface.addIndex('NbaTeams', ['nbaStatId']);
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Teams');
+    return queryInterface.dropTable('NbaTeams');
   }
 };
