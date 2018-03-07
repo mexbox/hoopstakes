@@ -1,4 +1,5 @@
 'use strict';
+
 const axios = require("axios");
 
 const getImageUrl = (playerName) => {
@@ -8,7 +9,7 @@ const getImageUrl = (playerName) => {
   nameArr.shift();
   const lastName = nameArr.join('_');
 
-  return `https://nba-players.herokuapp.com/players-stats/${lastName}/${firstName}`;
+  return `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
 }
 
 module.exports = {
