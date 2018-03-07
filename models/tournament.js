@@ -1,14 +1,16 @@
 'use strict';
-const Sequelize = require('sequelize');
-const connection = require('../helpers/dbConnection');
 
-var Tournament = connection.define('User', {
-  name: Sequelize.STRING,
-  season: Sequelize.INTEGER
-}, {});
+const debug = require('debug')('hoopstakes:models:team');
 
-Tournament.associate = function(models) {
-  // associations can be defined here
+module.exports = (sequelize, DataTypes) => {
+  var Tournament = sequelize.define('User', {
+    name: DataTypes.STRING,
+    season: DataTypes.INTEGER
+  }, {});
+
+  Tournament.associate = (models) => {
+
+  };
+
+  return Tournament;
 };
-
-module.exports = User;

@@ -1,17 +1,44 @@
 'use strict';
+
+const debug = require('debug')('hoopstakes:models:team');
 const Sequelize = require('sequelize');
-const connection = require('../helpers/dbConnection');
+const Op = Sequelize.Op
 
-var NbaTeam = connection.define('NbaTeam', {
-  nbaStatId: Sequelize.INTEGER,
-  name: Sequelize.STRING,
-  conference: Sequelize.STRING,
-  logo: Sequelize.STRING,
-  description: Sequelize.STRING
-}, {});
+module.exports = (sequelize, DataTypes) => {
+  var NbaTeam = sequelize.define('NbaTeam', {
+    nbaStatId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
+    conference: DataTypes.STRING,
+    logo: DataTypes.STRING,
+    description: DataTypes.STRING
+  },{});
 
-NbaTeam.associate = function(models) {
-  // associations can be defined here
+  NbaTeam.associate = (models) => {
+    NbaTeam.hasMany(models.NbaPlayer, {
+      sourceKey: 'nbaStatId',
+      foreignKey: 'nbaTeamStatId'
+    });
+  };
+
+  NbaTeam.getTeamsByConference = async (conference, includePlayers) => {
+    const query = {
+      where: {
+        rank: {
+          [Op.lte]: 8 //hardcoded to only pull playoff teams
+        },
+        conference: conference
+      },
+      order: [
+        ['rank','ASC'],
+      ],
+    };
+
+    if( includePlayers ) {
+      query.include =  [{ model: includePlayers, required: true}];
+    }
+
+    return await NbaTeam.findAll(query);
+  }
+
+  return NbaTeam;
 };
-
-module.exports = NbaTeam;
