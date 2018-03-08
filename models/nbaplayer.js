@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     nbaTeamStatId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     imgUrl: DataTypes.STRING,
+    stats: DataTypes.JSON,
   });
 
   NbaPlayer.associate = (models) => {

@@ -38,6 +38,22 @@ class NbaTeams extends React.Component {
     componentWillMount = async () => {
         const teamsRes = await fetch('/api/tournements/teams');
         const teamsJson = await teamsRes.json();
+        console.log(teamsJson);
+        teamsJson.east.forEach((team) => {
+            team.NbaPlayers.sort((a,b) => {
+                if ( a.stats.ppg > b.stats.ppg) return -1;
+                if ( a.stats.ppg < b.stats.ppg) return 1;
+                return 0;
+            });
+        });
+
+        teamsJson.west.forEach((team) => {
+            team.NbaPlayers.sort((a,b) => {
+                if ( a.stats.ppg > b.stats.ppg)return -1;
+                if ( a.stats.ppg < b.stats.ppg)return 1;
+                return 0;
+            });
+        });
         this.setState({teams: teamsJson});
     }
 
@@ -76,6 +92,11 @@ class NbaTeams extends React.Component {
                                     <TableRow>
                                         <TableCell></TableCell>
                                         <TableCell>Name</TableCell>
+                                        <TableCell>PPG</TableCell>
+                                        <TableCell>AST</TableCell>
+                                        <TableCell>REB</TableCell>
+                                        <TableCell>BLK</TableCell>
+                                        <TableCell>STL</TableCell>
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -84,6 +105,11 @@ class NbaTeams extends React.Component {
                                         <TableRow key={player.id}>
                                             <TableCell><img src={player.imgUrl} style={{maxHeight:'40px'}} /></TableCell>
                                             <TableCell>{player.name}</TableCell>
+                                            <TableCell>{player.stats.ppg}</TableCell>
+                                            <TableCell>{player.stats.ast}</TableCell>
+                                            <TableCell>{player.stats.reb}</TableCell>
+                                            <TableCell>{player.stats.blk}</TableCell>
+                                            <TableCell>{player.stats.stl}</TableCell>
                                         </TableRow>
                                         );
                                     })}
