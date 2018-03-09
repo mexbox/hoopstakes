@@ -1,14 +1,15 @@
 'use strict';
+
 const axios = require("axios");
 
 const getImageUrl = (playerName) => {
   const nameArr = playerName.split(' ');
-  const firstName = nameArr[0];
+  const firstName = nameArr[0].replace("'","").replace(".","");
 
   nameArr.shift();
-  const lastName = nameArr.join('_');
+  const lastName = nameArr.join('_').replace("'","").replace(".","");
 
-  return `https://nba-players.herokuapp.com/players-stats/${lastName}/${firstName}`;
+  return `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
 }
 
 module.exports = {
@@ -24,6 +25,13 @@ module.exports = {
               nbaTeamStatId: player[2],
               name: player[1],
               imgUrl: getImageUrl(player[1]),
+              stats: JSON.stringify({
+                reb: player[21],
+                ast: player[22],
+                stl: player[24],
+                blk: player[25],
+                ppg: player[29],
+              }),
               createdAt: new Date(),
               updatedAt: new Date()
           }

@@ -1,18 +1,21 @@
 'use strict';
-const Sequelize = require('sequelize');
-const connection = require('../helpers/dbConnection');
+var debug = require('debug')('hoopstakes:models:player');
 
-var NbaPlayer = sequelize.define('NbaPlayer', {
-  nbaStatId: DataType.INTEGER,
-  nbaTeamStatId: DataType.INTEGER,
-  name: DataTypes.STRING,
-}, {});
-
-NbaPlayer.associate = function(models) {
-  NbaPlayer.belongsTo(models.NbaTeam, {
-    foreignKey: 'nbaTeamStatId',
-    onDelete: 'CASCADE'
+module.exports = (sequelize, DataTypes) => {
+  var NbaPlayer = sequelize.define('NbaPlayer', {
+    nbaStatId: DataTypes.INTEGER,
+    nbaTeamStatId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
+    imgUrl: DataTypes.STRING,
+    stats: DataTypes.JSON,
   });
-};
 
-module.exports = NbaPlayer;
+  NbaPlayer.associate = (models) => {
+    NbaPlayer.belongsTo(models.NbaTeam, {
+      foreignKey: 'nbaTeamStatId',
+      onDelete: 'CASCADE'
+    });
+  };
+
+  return NbaPlayer;
+};

@@ -6,6 +6,7 @@ import ExpansionPanel, {
     ExpansionPanelSummary,
     ExpansionPanelDetails,
 } from 'material-ui/ExpansionPanel';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import teamLogos from './NbaTeamLogos'
@@ -31,53 +32,89 @@ class NbaTeams extends React.Component {
     state = {
         conference: 0,
         derp:2,
-        teams:{
-            eastern:[
-                {name: 'celtics', logo: teamLogos.celtics},
-                {name: 'cavs', logo: teamLogos.cavs},
-                {name: 'heat', logo: teamLogos.heat},
-                {name: 'pacers', logo: teamLogos.pacers},
-                {name: 'raptors', logo: teamLogos.raptors},
-                {name: 'sixers', logo: teamLogos.sixers},
-                {name: 'wizards', logo: teamLogos.wizards},
-                {name: 'wolves', logo: teamLogos.wolves}
-            ],
-            western:[
-                {name: 'blazers', logo: teamLogos.blazers},
-                {name: 'bucks', logo: teamLogos.bucks},
-                {name: 'nuggets', logo: teamLogos.nuggets},
-                {name: 'pelicans', logo: teamLogos.pelicans},
-                {name: 'rockets', logo: teamLogos.rockets},
-                {name: 'spurs', logo: teamLogos.spurs},
-                {name: 'thunder', logo: teamLogos.thunder},
-                {name: 'warriors', logo: teamLogos.warriors}
-            ]
-        }
+        teams: false
     };
+
+    componentWillMount = async () => {
+        const teamsRes = await fetch('/api/tournements/teams');
+        const teamsJson = await teamsRes.json();
+        console.log(teamsJson);
+        teamsJson.east.forEach((team) => {
+            team.NbaPlayers.sort((a,b) => {
+                if ( a.stats.ppg > b.stats.ppg) return -1;
+                if ( a.stats.ppg < b.stats.ppg) return 1;
+                return 0;
+            });
+        });
+
+        teamsJson.west.forEach((team) => {
+            team.NbaPlayers.sort((a,b) => {
+                if ( a.stats.ppg > b.stats.ppg)return -1;
+                if ( a.stats.ppg < b.stats.ppg)return 1;
+                return 0;
+            });
+        });
+        this.setState({teams: teamsJson});
+    }
 
     handleChange = (event, value) => {
         this.setState({ conference: value });
     };
 
+    getTeamLogo = (name) => {
+        const nameArr = name.split(' ');
+        let shortName = nameArr[nameArr.length-1].toLowerCase();
+        if(shortName.indexOf('7') > -1){
+            shortName = 'sixers';
+        }
+
+        return teamLogos[shortName] || '';
+    }
+
     getTeams(conferenceIndex) {
-        const conference = conferenceIndex === 0 ? 'eastern' : 'western';
+        const conference = conferenceIndex === 0 ? 'east' : 'west';
         const teams = this.state.teams[conference];
         const { classes } = this.props;
 
         return (
             <div className={classes.root}>
-                {teams.map( (team) => {
+                {teams && teams.map( (team) => { 
+                    team.logo = this.getTeamLogo(team.name)
                     return (
                         <ExpansionPanel key={team.name}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <img src={team.logo} className={classNames(classes.teamLogo)} />
+                                { team.logo && <img src={team.logo} className={classNames(classes.teamLogo)} /> }
                                 <Typography className={classNames(classes.teamName)}>{team.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                                <Typography>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                    sit amet blandit leo lobortis eget.
-                                </Typography>
+                                <Table className={classes.table}>
+                                    <TableHead>
+                                    <TableRow>
+                                        <TableCell></TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>PPG</TableCell>
+                                        <TableCell>AST</TableCell>
+                                        <TableCell>REB</TableCell>
+                                        <TableCell>BLK</TableCell>
+                                        <TableCell>STL</TableCell>
+                                    </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {team.NbaPlayers.map( player => {
+                                        return (
+                                        <TableRow key={player.id}>
+                                            <TableCell><img src={player.imgUrl} style={{maxHeight:'40px'}} /></TableCell>
+                                            <TableCell>{player.name}</TableCell>
+                                            <TableCell>{player.stats.ppg}</TableCell>
+                                            <TableCell>{player.stats.ast}</TableCell>
+                                            <TableCell>{player.stats.reb}</TableCell>
+                                            <TableCell>{player.stats.blk}</TableCell>
+                                            <TableCell>{player.stats.stl}</TableCell>
+                                        </TableRow>
+                                        );
+                                    })}
+                                    </TableBody>
+                                </Table>
                             </ExpansionPanelDetails>
                         </ExpansionPanel> 
                     )
@@ -89,6 +126,7 @@ class NbaTeams extends React.Component {
 
     render() {
         const { classes } = this.props;
+        const { teams } = this.state;
         return (
             <div>
                 <Paper style={{ width: '100%' }}>
@@ -105,7 +143,8 @@ class NbaTeams extends React.Component {
                   </Tabs>
                 </Paper>
                 <br />
-                {this.getTeams(this.state.conference)}
+                {teams ? this.getTeams(this.state.conference) : <div> loading teams </div>}
+                
             </div>
         );
     }

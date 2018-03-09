@@ -26,6 +26,9 @@ module.exports = {
         imgUrl: {
           type: Sequelize.STRING
         },
+        stats: {
+          type: Sequelize.JSON
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE
