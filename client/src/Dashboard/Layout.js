@@ -4,8 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Topbar from './Topbar';
-import TournementName from './TournementName';
-import NbaTeams from './NbaTeams';
+import TournementName from './Tournement/TournementName';
+import ConferenceSelector from './Tournement/ConferenceSelector';
 
 
 const styles = theme => ({
@@ -16,7 +16,6 @@ const styles = theme => ({
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
-    display: 'flex',
     width: '100%',
     minHeight: '100vh'
   },
@@ -52,7 +51,7 @@ class Layout extends React.Component {
           <main className={classNames(classes.content)}>
             <div className={classNames(classes.tournementContainer)}>
               <TournementName />
-              <NbaTeams />
+              <ConferenceSelector />
             </div>
           </main>
         </div>
