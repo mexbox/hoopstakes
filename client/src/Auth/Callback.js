@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Logo from '../assets/images/logo.png';
 // import loading from './loading.svg';
 
 class Callback extends Component {
@@ -6,13 +7,12 @@ class Callback extends Component {
     const style = {
       width: '100vw',
       height: '100vh',
-      backgroundColor: 'gray',
       display: 'grid'
     }
 
     return (
       <div style={style} >
-        <p style={{margin:'auto'}}>Loggin' ya in.</p>
+        <img alt="Hoopstakes Logo" src={Logo} style={{margin:'auto', maxHeight:'75px'}} />
       </div>
     );
   }
