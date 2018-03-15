@@ -4,8 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Topbar from './Topbar';
-import TournementName from './Tournement/TournementName';
-import ConferenceSelector from './Tournement/ConferenceSelector';
+import TournamentName from './Tournament/TournamentName';
+import ConferenceSelector from './Tournament/ConferenceSelector';
 
 
 const styles = theme => ({
@@ -30,7 +30,7 @@ const styles = theme => ({
     }),
   },
 
-  tournementContainer: {
+  tournamentContainer: {
     marginTop: '50px',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -49,8 +49,8 @@ class Layout extends React.Component {
         <div className={classes.appFrame}>
           <Topbar logOut={this.props.logOut.bind(this)} />
           <main className={classNames(classes.content)}>
-            <div className={classNames(classes.tournementContainer)}>
-              <TournementName />
+            <div className={classNames(classes.tournamentContainer)}>
+              <TournamentName />
               <ConferenceSelector />
             </div>
           </main>
