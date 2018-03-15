@@ -4,7 +4,7 @@ const models = require('../models/dbConnection');
 const TeamModel = models.NbaTeam;
 const TournamentModel = models.Tournament;
 const PlayerModel = models.NbaPlayer;
-const userId = 'google | 30923320235553';
+const ParticipantModel = models.Participants;
 
 var debug = require('debug')('hoopstakes:tournaments');
 
@@ -13,7 +13,7 @@ const Tournaments = {
         try{
           const east = await TeamModel.getTeamsByConference('east', PlayerModel);
           const west = await TeamModel.getTeamsByConference('west', PlayerModel);
-          const tourneys = await TournamentModel.findTourneysByUser(userId);
+          const tourneys = await TournamentModel.findTourneysByUser(req.query.userId, ParticipantModel);
           const teams = { east, west };
           const tourneyInfo = {tourneys, teams};
           return res.status(201).send(tourneyInfo);
@@ -22,5 +22,23 @@ const Tournaments = {
           return res.status(400).send(error);
         }
     },
+    create: async(req, res) => {
+      try{
+        await TournamentModel.newTourney(req.body, ParticipantModel);
+        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId, ParticipantModel);
+        return res.status(200).send(tourneys);
+      }catch(e){
+        console.log(e);
+      }
+    },
+    update: async(req, res) => {
+      try{
+        await TournamentModel.updateTourney(req.body, ParticipantModel);
+        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId, ParticipantModel);
+        return res.status(200).send(tourneys);
+      }catch(e){
+        return res.status(401).send(e);
+      }
+    }
 }
 module.exports = Tournaments;
