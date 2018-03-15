@@ -67,13 +67,13 @@ class Topbar extends React.Component {
                                 <ListItemIcon>
                                     <AddCircleIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="New Tournement" />
+                                <ListItemText primary="New Tournament" />
                             </ListItem>
                             <ListItem button>
                                 <ListItemIcon>
                                     <WhatsHotIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Current Tournements" />
+                                <ListItemText primary="Current Tournaments" />
                             </ListItem>
                         </List>
 
