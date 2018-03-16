@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //API routes
 app.use('/api/users', users);
 app.use('/api/nba-teams', nbaTeams);
-app.use('/api/tournaments', checkJwt, tournaments);
+app.use('/api/tournaments', tournaments);
 
 //React App
 app.get('*', (req, res) => {
