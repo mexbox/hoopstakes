@@ -31,29 +31,49 @@ const styles = theme => ({
 
 class Layout extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    activeView: false,
   };
 
   componentWillMount = () => {
     setTimeout(() => {
       //imitate network time
       //probably try to load most of required data here.
-      this.setState({tournements: [1]});
+      // this.setState({tournements: [{name: 'my tourney', id: 1}]});
+      this.setState({tournements: []});
+      this.setState({activeView: !this.state.tournements.length ? 'create' : 'list'});
       this.setState({loading: false});
     }, 2500);
   }
 
+  changeTournementView =  (view) => {
+    if( (view === 'list' || view === 'show') && !this.state.tournements.length ) {
+      view = 'create';
+    }
+    this.setState({activeView: view});
+  }
+
+  createTournement = () => {
+    setTimeout(() => { 
+      //imitate network call to create
+      const newId = this.state.tournements.length + 1;
+      var newTournament = {name:`new tourney ${newId}`, id: newId}
+      this.setState({tournements: [...this.state.tournements, newTournament]})
+      this.changeTournementView('list');
+    }, 2500)
+  }
+
   render() {
     const { classes } = this.props;
-    const { loading, tournements } = this.state;
+    const { loading, tournements, activeView } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <Topbar logOut={this.props.logOut.bind(this)} />
+          <Topbar logOut={this.props.logOut.bind(this)} setTourneyView={this.changeTournementView.bind(this)} />
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
-            {!loading && <TournementMain tournements={tournements} />}
+            {!loading && <TournementMain activeView={activeView} tournements={tournements} create={this.createTournement.bind(this)} />}
           </main>
         </div>
       </div>

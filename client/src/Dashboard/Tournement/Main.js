@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 import TournementCreate from './Create';
 import TournementList from './List';
-import TournementName from './TournementName';
-import ConferenceSelector from './ConferenceSelector';
+import TournementShow from './Show';
+
 
 const styles = theme => ({
     tournementContainer: {
@@ -18,26 +18,20 @@ const styles = theme => ({
 });
 
 class TournementMain extends React.Component {
+
     state = {
-        activeTournement: 0
+        activeTournement: false
     }
+
     render() {
-        const { classes, tournements } = this.props;
+        const { classes, tournements, activeView, create } = this.props;
         const { activeTournement } = this.state;
 
         return (
             <div className={classNames(classes.tournementContainer)}>
-                {!tournements.length && <TournementCreate />}
-                {tournements.length > 0 && !activeTournement && <TournementList />} 
-            
-                {activeTournement &&
-                    <div>
-                        <TournementName />
-                        <ConferenceSelector />
-                    </div>
-                }
-
-
+                {activeView === 'create' && <TournementCreate create={create.bind(this)} />}
+                {activeView === 'list' && <TournementList tournements={tournements} />} 
+                {activeView === 'show' && <TournementShow id={activeTournement} />}
             </div>
         );
     }
@@ -48,4 +42,4 @@ TournementMain.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TournementMain);
+export default withStyles(styles, { withTheme: true })(TournementMain);

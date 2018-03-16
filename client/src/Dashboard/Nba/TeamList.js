@@ -10,8 +10,8 @@ import ExpansionPanel, {
 
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import NbaRoster from './NbaRoster';
-import teamLogos from './NbaTeamLogos';
+import NbaRoster from './Roster';
+import teamLogos from './TeamLogos';
 
 const styles = theme => ({
     root: {

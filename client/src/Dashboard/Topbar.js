@@ -41,13 +41,13 @@ class Topbar extends React.Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes, setTourneyView } = this.props;
         
         return (
-            <div className={classes.root}>
+            <div>
                 <AppBar position="absolute">
                     <Toolbar disableGutters={true}>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                    <IconButton color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
                         <MenuIcon />
                     </IconButton>
                         <img alt="Hoopstakes Logo" src={Logo} className={classNames(classes.logo)} />
@@ -60,16 +60,18 @@ class Topbar extends React.Component {
                         tabIndex={0}
                         role="button"
                         onClick={this.toggleDrawer(false)}
-                        onKeyDown={this.toggleDrawer(false)}
+                        // onKeyDown={this.toggleDrawer(false)}
                     >
                         <List>
-                            <ListItem button>
+                        
+                            <ListItem button onClick={() => {setTourneyView('create')}}>
                                 <ListItemIcon>
                                     <AddCircleIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="New Tournement" />
                             </ListItem>
-                            <ListItem button>
+                            
+                            <ListItem button onClick={() => {setTourneyView('list') }}>
                                 <ListItemIcon>
                                     <WhatsHotIcon />
                                 </ListItemIcon>

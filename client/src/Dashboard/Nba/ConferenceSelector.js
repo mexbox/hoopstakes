@@ -1,7 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import NbaTeamList from './NbaTeamList';
+import NbaTeamList from './TeamList';
 
 class ConferenceSelector extends React.Component {
 

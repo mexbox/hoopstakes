@@ -21,21 +21,26 @@ const styles = theme => ({
     },
 });
 
+
 class TournementList extends React.Component {
     render() {
-        const { classes } = this.props;
-        // const { activeTeams } = this.state;
+        const { classes, tournements } = this.props;
     
         return (
             <div className={classes.root}>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography className={classNames(classes.tournement)}>Tournement Name</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Lorem ipsum ...
-                    </ExpansionPanelDetails>
-                </ExpansionPanel> 
+                {tournements.map((tournement) => {
+                    return (
+                        <ExpansionPanel key={tournement.id}>
+                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography className={classNames(classes.tournement)}>{tournement.name}</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Lorem ipsum ...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel> 
+                    )
+                })}
+                
             </div>
         );
     }
@@ -46,4 +51,4 @@ TournementList.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TournementList);
+export default withStyles(styles, { withTheme: true })(TournementList);
