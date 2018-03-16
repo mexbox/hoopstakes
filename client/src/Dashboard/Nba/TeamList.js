@@ -10,8 +10,8 @@ import ExpansionPanel, {
 
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import NbaRoster from './NbaRoster';
-import teamLogos from './NbaTeamLogos';
+import NbaRoster from './Roster';
+import teamLogos from './TeamLogos';
 
 const styles = theme => ({
     root: {
@@ -42,13 +42,7 @@ class NbaTeamList extends React.Component {
     }
 
     componentWillMount = async () => {
-        // const teamsRes = await fetch('/api/tournaments/teams');
-        const teamsRes = await fetch('/api/tournaments/teams', {headers: 
-            {
-                'authorization': `Bearer ${localStorage.getItem('access_token')}`,
-                'content-type': 'application/json'
-            }
-        });
+        const teamsRes = await fetch('/api/tournaments/teams');
         const teamsJson = await teamsRes.json();
 
         teamsJson.east.forEach((team) => {

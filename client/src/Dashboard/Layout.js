@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
+import Callback from '../Auth/Callback';
+import TournamentMain from './Tournament/Main';
 import Topbar from './Topbar';
-import TournamentName from './Tournament/TournamentName';
-import ConferenceSelector from './Tournament/ConferenceSelector';
-
 
 const styles = theme => ({
   root: {
@@ -16,11 +15,10 @@ const styles = theme => ({
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
-    width: '100%',
-    minHeight: '100vh'
+    width: '100%',  
   },
-  
   content: {
+    minHeight: '100vh',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
@@ -28,31 +26,54 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-  },
-
-  tournamentContainer: {
-    marginTop: '50px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    maxWidth: '800px',
   }
 });
 
 class Layout extends React.Component {
-  state = {};
+  state = {
+    loading: true,
+    activeView: false,
+  };
+
+  componentWillMount = () => {
+    setTimeout(() => {
+      //imitate network time
+      //probably try to load most of required data here.
+      // this.setState({tournaments: [{name: 'my tournay', id: 1}]});
+      this.setState({tournaments: []});
+      this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
+      this.setState({loading: false});
+    }, 2500);
+  }
+
+  changeTournamentView =  (view) => {
+    if( (view === 'list' || view === 'show') && !this.state.tournaments.length ) {
+      view = 'create';
+    }
+    this.setState({activeView: view});
+  }
+
+  createTournament = () => {
+    setTimeout(() => { 
+      //imitate network call to create
+      const newId = this.state.tournaments.length + 1;
+      var newTournament = {name:`new tourney ${newId}`, id: newId}
+      this.setState({tournaments: [...this.state.tournaments, newTournament]})
+      this.changeTournamentView('list');
+    }, 2500)
+  }
 
   render() {
     const { classes } = this.props;
+    const { loading, tournaments, activeView } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <Topbar logOut={this.props.logOut.bind(this)} />
+          <Topbar logOut={this.props.logOut.bind(this)} setTournayView={this.changeTournamentView.bind(this)} />
           <main className={classNames(classes.content)}>
-            <div className={classNames(classes.tournamentContainer)}>
-              <TournamentName />
-              <ConferenceSelector />
-            </div>
+            {loading && <Callback />}
+            {!loading && <TournamentMain activeView={activeView} tournaments={tournaments} create={this.createTournament.bind(this)} />}
           </main>
         </div>
       </div>
