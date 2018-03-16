@@ -42,7 +42,7 @@ class NbaTeamList extends React.Component {
     }
 
     componentWillMount = async () => {
-        const teamsRes = await fetch('/api/tournements/teams');
+        const teamsRes = await fetch('/api/tournaments/teams');
         const teamsJson = await teamsRes.json();
 
         teamsJson.east.forEach((team) => {

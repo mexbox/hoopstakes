@@ -14,7 +14,7 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    tournementName: {
+    tournamentName: {
         padding: '12px',
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
@@ -22,17 +22,17 @@ const styles = theme => ({
 });
 
 
-class TournementList extends React.Component {
+class TournamentList extends React.Component {
     render() {
-        const { classes, tournements } = this.props;
+        const { classes, tournaments } = this.props;
     
         return (
             <div className={classes.root}>
-                {tournements.map((tournement) => {
+                {tournaments.map((tournament) => {
                     return (
-                        <ExpansionPanel key={tournement.id}>
+                        <ExpansionPanel key={tournament.id}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography className={classNames(classes.tournement)}>{tournement.name}</Typography>
+                                <Typography className={classNames(classes.tournament)}>{tournament.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 Lorem ipsum ...
@@ -46,9 +46,9 @@ class TournementList extends React.Component {
     }
 }
 
-TournementList.propTypes = {
+TournamentList.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(TournementList);
+export default withStyles(styles, { withTheme: true })(TournamentList);

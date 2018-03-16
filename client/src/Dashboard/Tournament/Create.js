@@ -21,7 +21,7 @@ const styles = theme => ({
     }
 });
 
-class TournementCreate extends React.Component {
+class TournamentCreate extends React.Component {
 
     render() {
         const { classes, create } = this.props;
@@ -29,7 +29,7 @@ class TournementCreate extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.form}>
-                    <Typography align='center'>Create a New Tournement!</Typography>
+                    <Typography align='center'>Create a New Tournament!</Typography>
                     <br />
                     <div className={classes.buttonContainer}>
                         <Button variant="raised" color="inherit" className={classes.button} onClick={ create }>
@@ -42,9 +42,9 @@ class TournementCreate extends React.Component {
     }
 }
 
-TournementCreate.propTypes = {
+TournamentCreate.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(TournementCreate);
+export default withStyles(styles, { withTheme: true })(TournamentCreate);

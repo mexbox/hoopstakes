@@ -10,15 +10,16 @@
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "eslint": "^4.18.2",
     "express": "~4.15.5",
-    "express-jwt": "^5.3.0",
+    "express-jwt": "^5.3.1",
     "express-jwt-authz": "^1.0.0",
     "jade": "~1.11.0",
     "jwks-rsa": "^1.2.1",
     "morgan": "~1.9.0",
     "mysql2": "^1.5.2",
-    "nodemon": "^1.14.7",
-    "sequelize": "^4.33.4",
+    "nodemon": "^1.17.1",
+    "sequelize": "^4.35.2",
     "sequelize-cli": "^4.0.0",
     "serve-favicon": "~2.4.5"
   },
@@ -27,6 +28,8 @@
     "eslint-plugin-react": "^7.7.0"
   },
   "nodemonConfig": {
-    "ignore": ["client/*"]
+    "ignore": [
+      "client/*"
+    ]
   }
 }

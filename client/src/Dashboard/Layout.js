@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Callback from '../Auth/Callback';
-import TournementMain from './Tournement/Main';
+import TournamentMain from './Tournament/Main';
 import Topbar from './Topbar';
 
 const styles = theme => ({
@@ -39,41 +39,41 @@ class Layout extends React.Component {
     setTimeout(() => {
       //imitate network time
       //probably try to load most of required data here.
-      // this.setState({tournements: [{name: 'my tourney', id: 1}]});
-      this.setState({tournements: []});
-      this.setState({activeView: !this.state.tournements.length ? 'create' : 'list'});
+      // this.setState({tournaments: [{name: 'my tournay', id: 1}]});
+      this.setState({tournaments: []});
+      this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
       this.setState({loading: false});
     }, 2500);
   }
 
-  changeTournementView =  (view) => {
-    if( (view === 'list' || view === 'show') && !this.state.tournements.length ) {
+  changeTournamentView =  (view) => {
+    if( (view === 'list' || view === 'show') && !this.state.tournaments.length ) {
       view = 'create';
     }
     this.setState({activeView: view});
   }
 
-  createTournement = () => {
+  createTournament = () => {
     setTimeout(() => { 
       //imitate network call to create
-      const newId = this.state.tournements.length + 1;
+      const newId = this.state.tournaments.length + 1;
       var newTournament = {name:`new tourney ${newId}`, id: newId}
-      this.setState({tournements: [...this.state.tournements, newTournament]})
-      this.changeTournementView('list');
+      this.setState({tournaments: [...this.state.tournaments, newTournament]})
+      this.changeTournamentView('list');
     }, 2500)
   }
 
   render() {
     const { classes } = this.props;
-    const { loading, tournements, activeView } = this.state;
+    const { loading, tournaments, activeView } = this.state;
 
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <Topbar logOut={this.props.logOut.bind(this)} setTourneyView={this.changeTournementView.bind(this)} />
+          <Topbar logOut={this.props.logOut.bind(this)} setTournayView={this.changeTournamentView.bind(this)} />
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
-            {!loading && <TournementMain activeView={activeView} tournements={tournements} create={this.createTournement.bind(this)} />}
+            {!loading && <TournamentMain activeView={activeView} tournaments={tournaments} create={this.createTournament.bind(this)} />}
           </main>
         </div>
       </div>

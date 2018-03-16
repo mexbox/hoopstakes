@@ -33,7 +33,7 @@ class TournamentName extends React.Component {
                 <TextField
                   id="tournamentName"
                   label="Tournament Name"
-                  className={classNames(classes.tournementName)}
+                  className={classNames(classes.tournamentName)}
                   value={this.state.tournamentName}
                   onChange={this.handleChange('tournamentName')}
                   margin="normal"

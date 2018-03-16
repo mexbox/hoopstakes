@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 // import classNames from 'classnames';
 
-import TournementName from './Name';
+import TournamentName from './Name';
 import ConferenceSelector from '../Nba/ConferenceSelector';
 
 const styles = theme => ({
@@ -15,7 +15,7 @@ class TournamentShow extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <TournementName />
+                <TournamentName />
                 <ConferenceSelector />
             </div>
         )
