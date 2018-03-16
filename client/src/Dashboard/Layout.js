@@ -33,17 +33,38 @@ class Layout extends React.Component {
   state = {
     loading: true,
     activeView: false,
+    teams: [],
   };
 
-  componentWillMount = () => {
-    setTimeout(() => {
-      //imitate network time
-      //probably try to load most of required data here.
-      // this.setState({tournaments: [{name: 'my tournay', id: 1}]});
-      this.setState({tournaments: []});
-      this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
-      this.setState({loading: false});
-    }, 2500);
+  componentWillMount = async () => {
+    const data = await this.getTeams();
+    this.setState({tournaments: data.tourneys});
+    this.setState({teams: data.teams});
+    this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
+    this.setState({loading: false});
+  }
+
+  getTeams = async () => {
+    const response = await fetch(`/api/tournaments/teams?userId=${JSON.parse(localStorage.getItem('user_profile')).sub}`);
+    const data = await response.json();
+
+    data.teams.east.forEach((team) => {
+        team.NbaPlayers.sort((a,b) => {
+            if ( a.stats.ppg > b.stats.ppg) return -1;
+            if ( a.stats.ppg < b.stats.ppg) return 1;
+            return 0;
+        });
+    });
+
+    data.teams.west.forEach((team) => {
+        team.NbaPlayers.sort((a,b) => {
+            if ( a.stats.ppg > b.stats.ppg)return -1;
+            if ( a.stats.ppg < b.stats.ppg)return 1;
+            return 0;
+        });
+    });
+
+    return data;
   }
 
   changeTournamentView =  (view) => {
@@ -53,14 +74,19 @@ class Layout extends React.Component {
     this.setState({activeView: view});
   }
 
-  createTournament = () => {
-    setTimeout(() => { 
-      //imitate network call to create
-      const newId = this.state.tournaments.length + 1;
-      var newTournament = {name:`new tourney ${newId}`, id: newId}
-      this.setState({tournaments: [...this.state.tournaments, newTournament]})
-      this.changeTournamentView('list');
-    }, 2500)
+  createTournament = async () => {
+    this.setState({loading: true});
+    const response = await fetch('/api/tournaments/create',{
+      method: 'POST',
+      body: JSON.stringify({ name: 'new tourney', userId: JSON.parse(localStorage.getItem('user_profile')).sub }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+    const tourneys = await response.json();
+    this.setState({tournaments: tourneys})
+    this.changeTournamentView('list');
+    this.setState({loading: false});
   }
 
   render() {
@@ -70,7 +96,7 @@ class Layout extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <Topbar logOut={this.props.logOut.bind(this)} setTournayView={this.changeTournamentView.bind(this)} />
+          <Topbar logOut={this.props.logOut.bind(this)} setTourneyView={this.changeTournamentView.bind(this)} />
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
             {!loading && <TournamentMain activeView={activeView} tournaments={tournaments} create={this.createTournament.bind(this)} />}

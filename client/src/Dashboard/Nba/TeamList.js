@@ -32,36 +32,13 @@ class NbaTeamList extends React.Component {
         super(props);
         this.state = {
             teams: false,
-            activeTeams: false,
+            activeTeams: 'east',
         };
     }
     componentWillReceiveProps(nextProps) {
         if( nextProps != this.props ) {
             this.setActiveTeams(nextProps.conference);
         }
-    }
-
-    componentWillMount = async () => {
-        const teamsRes = await fetch('/api/tournaments/teams');
-        const teamsJson = await teamsRes.json();
-
-        teamsJson.east.forEach((team) => {
-            team.NbaPlayers.sort((a,b) => {
-                if ( a.stats.ppg > b.stats.ppg) return -1;
-                if ( a.stats.ppg < b.stats.ppg) return 1;
-                return 0;
-            });
-        });
-
-        teamsJson.west.forEach((team) => {
-            team.NbaPlayers.sort((a,b) => {
-                if ( a.stats.ppg > b.stats.ppg)return -1;
-                if ( a.stats.ppg < b.stats.ppg)return 1;
-                return 0;
-            });
-        });
-        this.setState({teams: teamsJson});
-        this.setActiveTeams(this.props.conference);
     }
 
     setActiveTeams = (tab) => {

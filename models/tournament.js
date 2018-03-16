@@ -29,9 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Tournament.newTourney = async(params, Participants) => {
-    console.log(params);
-      const tourney = await Tournament.create({ name : params.name, season : 1 });
-      return await Participants.create({ tournamentId: tourney.id, userId : params.userId, role : 1});
+    const tourney = await Tournament.create({ name : params.name, season : 1 });
+    return await Participants.create({ tournamentId: tourney.id, userId : params.userId, role : 1});
   };
 
   Tournament.isAdmin = async(params, Participants) => {
