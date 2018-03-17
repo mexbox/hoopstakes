@@ -58,8 +58,6 @@ class Layout extends React.Component {
   }
   
   getTeams = async (userId) => {
-    console.log('get teams...');
-    console.log(this.props);
     const response = await fetch(`/api/tournaments/teams?userId=${userId}`);
     const data = await response.json();
 
