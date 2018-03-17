@@ -130,13 +130,14 @@ class Layout extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <Topbar logOut={this.props.logOut.bind(this)} setTourneyView={this.changeTournamentView.bind(this)} />
+          <Topbar logOut={this.props.logOut.bind(this)}  />
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
             {!loading && <TournamentMain
                             nbaTeams={teams} 
                             activeView={activeView} 
                             tournaments={tournaments}
+                            changeView={this.changeTournamentView.bind(this)}
                             activeTournament={activeTournament} 
                             show={this.setActiveTournament.bind(this)} 
                             create={this.createTournament.bind(this)} 

@@ -12,9 +12,6 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    form: {
-        marginTop: '50px'
-    },
     buttonContainer: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -42,7 +39,7 @@ class TournamentCreate extends React.Component {
     
         return (
             <div className={classes.root}>
-                <Paper className={classes.form}>
+                <Paper>
                     <Typography align='center'>Create a New Tournament!</Typography>
                     <br />
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
