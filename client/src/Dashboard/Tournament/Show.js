@@ -19,7 +19,7 @@ class TournamentShow extends React.Component {
 
     render() {
         const { name } = this.state;
-        const { classes, nbaTeams } = this.props;
+        const { nbaTeams } = this.props;
         return (
             <div>
                 <TournamentName name={name} />

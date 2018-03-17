@@ -16,13 +16,12 @@ class ConferenceSelector extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
         const { conference, activeTeams } = this.state;
         return (
             <div>
                 <Paper style={{ width: '100%' }}>
                     <Tabs
-                    value={this.state.conference}
+                    value={conference}
                     onChange={this.handleChange}
                     indicatorColor="#fff"
                     textColor="primary"

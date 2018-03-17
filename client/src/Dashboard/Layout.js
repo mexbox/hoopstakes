@@ -38,27 +38,29 @@ class Layout extends React.Component {
   };
 
   componentWillReceiveProps = async (nextProps) => {
-    if(nextProps.user){
-      await this.initTourneys();    
+    if(nextProps.user && nextProps.user !== this.props.user){
+      await this.initTourneys(nextProps.user.sub);
     }
   }
 
   componentWillMount = async () => {
     if(this.props.user) {
-      await this.initTourneys()
+      await this.initTourneys(this.props.user.sub);
     }
   }
 
-  initTourneys = async () => {
-    const data = await this.getTeams();
+  initTourneys = async (userId) => {
+    const data = await this.getTeams(userId);
     this.setState({tournaments: data.tourneys});
     this.setState({teams: data.teams});
     this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
     this.setState({loading: false});
   }
   
-  getTeams = async () => {
-    const response = await fetch(`/api/tournaments/teams?userId=${this.props.user.sub}`);
+  getTeams = async (userId) => {
+    console.log('get teams...');
+    console.log(this.props);
+    const response = await fetch(`/api/tournaments/teams?userId=${userId}`);
     const data = await response.json();
 
     data.teams.east.forEach((team) => {
@@ -85,6 +87,7 @@ class Layout extends React.Component {
       if(tourney.id === tourneyId){
         return true;
       }
+      return false;
     });
     this.setState({activeTournament: activeTournament});
     this.changeTournamentView('show');

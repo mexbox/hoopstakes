@@ -30,13 +30,11 @@ const styles = theme => ({
 class NbaTeamList extends React.Component {
     constructor(props) {
         super(props);
-        console.log('list', props);
         this.state = {
             activeTeams: props.activeTeams,
         };
     }
     componentWillReceiveProps = (nextProps) => {
-        console.log('next', nextProps);
         this.setState({activeTeams: nextProps.activeTeams});
     }
 
@@ -50,7 +48,7 @@ class NbaTeamList extends React.Component {
     }
     
     render() {
-        const { conference, classes } = this.props;
+        const { classes } = this.props;
         const { activeTeams } = this.state;
     
         return (
@@ -60,7 +58,7 @@ class NbaTeamList extends React.Component {
                     return (
                         <ExpansionPanel key={team.name}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                { team.logo && <img src={team.logo} className={classNames(classes.teamLogo)} /> }
+                                { team.logo && <img src={team.logo} alt={`${team.name} Logo`} className={classNames(classes.teamLogo)} /> }
                                 <Typography className={classNames(classes.teamName)}>{team.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>

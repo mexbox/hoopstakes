@@ -5,8 +5,6 @@ import { withStyles } from 'material-ui/styles';
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
-import Typography from 'material-ui/Typography';
-
 
 const styles = theme => ({
     root: {
