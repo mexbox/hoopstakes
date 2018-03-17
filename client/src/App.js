@@ -14,6 +14,13 @@ const dashboardTheme = createMuiTheme({
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: JSON.parse(localStorage.getItem('user_profile')) || false,
+    }
+  }
+
   login() {
     this.props.auth.login();
   }
@@ -22,13 +29,21 @@ class App extends Component {
     this.props.auth.logout();
   }
 
+  componentWillMount = () => {
+    if(!this.state.user) {
+      window.addEventListener('session_set', () => {
+        this.setState({user: JSON.parse(localStorage.getItem('user_profile'))});
+      });
+    }
+  }
 
   render() {
+    const { user } = this.state;
     const { isAuthenticated } = this.props.auth;
     const getDasboard = function(logoutFn) {
       return (
         <MuiThemeProvider theme={dashboardTheme}>
-          <Dashboard logOut={logoutFn} />
+          <Dashboard logOut={logoutFn} user={user} />
         </MuiThemeProvider>
       );
     }
