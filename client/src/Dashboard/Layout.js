@@ -33,19 +33,32 @@ class Layout extends React.Component {
   state = {
     loading: true,
     activeView: false,
+    activeTournament: false,
     teams: [],
   };
 
+  componentWillReceiveProps = async (nextProps) => {
+    if(nextProps.user){
+      await this.initTourneys();    
+    }
+  }
+
   componentWillMount = async () => {
+    if(this.props.user) {
+      await this.initTourneys()
+    }
+  }
+
+  initTourneys = async () => {
     const data = await this.getTeams();
     this.setState({tournaments: data.tourneys});
     this.setState({teams: data.teams});
     this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
     this.setState({loading: false});
   }
-
+  
   getTeams = async () => {
-    const response = await fetch(`/api/tournaments/teams?userId=${JSON.parse(localStorage.getItem('user_profile')).sub}`);
+    const response = await fetch(`/api/tournaments/teams?userId=${this.props.user.sub}`);
     const data = await response.json();
 
     data.teams.east.forEach((team) => {
@@ -67,18 +80,32 @@ class Layout extends React.Component {
     return data;
   }
 
+  setActiveTournament = (tourneyId) => {
+    const activeTournament = this.state.tournaments.find((tourney) => {
+      if(tourney.id === tourneyId){
+        return true;
+      }
+    });
+    this.setState({activeTournament: activeTournament});
+    this.changeTournamentView('show');
+  }
+
   changeTournamentView =  (view) => {
     if( (view === 'list' || view === 'show') && !this.state.tournaments.length ) {
       view = 'create';
     }
+
+    if( view !== 'show' ) {
+      this.setState({activeTournament: false});
+    }
     this.setState({activeView: view});
   }
 
-  createTournament = async () => {
+  createTournament = async (tourneyName) => {
     this.setState({loading: true});
     const response = await fetch('/api/tournaments/create',{
       method: 'POST',
-      body: JSON.stringify({ name: 'new tourney', userId: JSON.parse(localStorage.getItem('user_profile')).sub }),
+      body: JSON.stringify({ name: tourneyName, userId: JSON.parse(localStorage.getItem('user_profile')).sub }),
       headers: {
         'content-type': 'application/json'
       }
@@ -91,7 +118,13 @@ class Layout extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { loading, tournaments, activeView } = this.state;
+    const {
+            loading,
+            tournaments,
+            activeView,
+            activeTournament,
+            teams
+          } = this.state;
 
     return (
       <div className={classes.root}>
@@ -99,7 +132,14 @@ class Layout extends React.Component {
           <Topbar logOut={this.props.logOut.bind(this)} setTourneyView={this.changeTournamentView.bind(this)} />
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
-            {!loading && <TournamentMain activeView={activeView} tournaments={tournaments} create={this.createTournament.bind(this)} />}
+            {!loading && <TournamentMain
+                            nbaTeams={teams} 
+                            activeView={activeView} 
+                            tournaments={tournaments}
+                            activeTournament={activeTournament} 
+                            show={this.setActiveTournament.bind(this)} 
+                            create={this.createTournament.bind(this)} 
+                          />}
           </main>
         </div>
       </div>

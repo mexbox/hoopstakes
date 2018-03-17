@@ -60,7 +60,7 @@ class Topbar extends React.Component {
                         tabIndex={0}
                         role="button"
                         onClick={this.toggleDrawer(false)}
-                        // onKeyDown={this.toggleDrawer(false)}
+                        onKeyDown={this.toggleDrawer(false)}
                     >
                         <List>
                         

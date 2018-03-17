@@ -4,18 +4,20 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import NbaTeamList from './TeamList';
 
 class ConferenceSelector extends React.Component {
-
     state = {
         conference: 0,
+        activeTeams: this.props.nbaTeams['east']
     };
 
     handleChange = (event, value) => {
-        this.setState({ conference: value });
+        const conferenceName = value === 0 ? 'east' : 'west';
+        this.setState({activeTeams: this.props.nbaTeams[conferenceName] });
+        this.setState({conference: value });
     };
 
     render() {
         const { classes } = this.props;
-        const { conference } = this.state;
+        const { conference, activeTeams } = this.state;
         return (
             <div>
                 <Paper style={{ width: '100%' }}>
@@ -32,7 +34,7 @@ class ConferenceSelector extends React.Component {
                   </Tabs>
                 </Paper>
                 <br />
-                <NbaTeamList conference={conference} />
+                <NbaTeamList activeTeams={activeTeams} />
             </div>
         );
     }

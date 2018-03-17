@@ -19,19 +19,21 @@ const styles = theme => ({
 
 class TournamentMain extends React.Component {
 
-    state = {
-        activeTournament: false
-    }
-
     render() {
-        const { classes, tournaments, activeView, create } = this.props;
-        const { activeTournament } = this.state;
+        const { classes,
+                tournaments,
+                nbaTeams,
+                activeView,
+                activeTournament,
+                create,
+                show
+            } = this.props;
 
         return (
             <div className={classNames(classes.tournamentContainer)}>
                 {activeView === 'create' && <TournamentCreate create={create.bind(this)} />}
-                {activeView === 'list' && <TournamentList tournaments={tournaments} />} 
-                {activeView === 'show' && <TournamentShow id={activeTournament} />}
+                {activeView === 'list' && <TournamentList show={show.bind(this)} tournaments={tournaments} />} 
+                {activeView === 'show' && <TournamentShow tourney={activeTournament} nbaTeams={nbaTeams} />}
             </div>
         );
     }

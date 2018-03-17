@@ -30,20 +30,14 @@ const styles = theme => ({
 class NbaTeamList extends React.Component {
     constructor(props) {
         super(props);
+        console.log('list', props);
         this.state = {
-            teams: false,
-            activeTeams: 'east',
+            activeTeams: props.activeTeams,
         };
     }
-    componentWillReceiveProps(nextProps) {
-        if( nextProps != this.props ) {
-            this.setActiveTeams(nextProps.conference);
-        }
-    }
-
-    setActiveTeams = (tab) => {
-        const conference = tab === 0 ? 'east' : 'west';
-        this.setState({activeTeams: this.state.teams[conference] })
+    componentWillReceiveProps = (nextProps) => {
+        console.log('next', nextProps);
+        this.setState({activeTeams: nextProps.activeTeams});
     }
 
     getTeamLogo = (name) => {
@@ -53,14 +47,6 @@ class NbaTeamList extends React.Component {
             shortName = 'sixers';
         }
         return teamLogos[shortName] || '';
-    }
-
-    getTeams = (conference) => {
-        console.log(this.state.teams);
-        console.log(conference);
-        if( conference === 0){
-            return this
-        }
     }
     
     render() {
