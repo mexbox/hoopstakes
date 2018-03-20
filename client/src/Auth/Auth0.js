@@ -50,9 +50,11 @@ export default class Auth {
         localStorage.setItem('expires_at', expiresAt);
 
         //get user profile
-        this.lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
           if (!error) {
             localStorage.setItem('user_profile', JSON.stringify(profile));
+            const userEvent = new Event('session_set');
+            window.dispatchEvent(userEvent);
           }
         });
 

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       where: {
       },
       order: [
-        ['id','ASC'],
+        ['createdAt','DESC'],
       ],
     };
     query.include =  [{ model: Participants, where:{ userId : userId }, required: true}];
@@ -37,13 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     const query = {
       where: { userId: params.userId, tournamentId : params.tournamentId, role : 1}
     }
-    const adminPart = await Participants.findAll(query);
-    console.log('the Participants:');    
-    if(adminPart.length)
-    {
-      console.log(adminPart);
-      return true;
-    }
+    const adminRecord = await Participants.findAll(query);
+    if(adminRecord.length) { return true; }
     return false;
   };
 

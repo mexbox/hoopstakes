@@ -6,9 +6,13 @@ import classNames from 'classnames';
 import ExpansionPanel, {
     ExpansionPanelSummary,
     ExpansionPanelDetails,
+    ExpansionPanelActions
 } from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+
+import MoreVertIcon from 'material-ui-icons/MoreVert';
 
 const styles = theme => ({
     root: {
@@ -23,8 +27,9 @@ const styles = theme => ({
 
 
 class TournamentList extends React.Component {
+
     render() {
-        const { classes, tournaments } = this.props;
+        const { classes, tournaments, show } = this.props;
     
         return (
             <div className={classes.root}>
@@ -37,6 +42,11 @@ class TournamentList extends React.Component {
                             <ExpansionPanelDetails>
                                 Lorem ipsum ...
                             </ExpansionPanelDetails>
+                            <ExpansionPanelActions>
+                                <IconButton onClick={() => show(tournament.id)}>
+                                    <MoreVertIcon className={classes.title} />
+                                </IconButton>
+                            </ExpansionPanelActions>
                         </ExpansionPanel> 
                     )
                 })}

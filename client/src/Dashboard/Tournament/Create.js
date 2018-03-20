@@ -6,13 +6,11 @@ import classNames from 'classnames';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 
 const styles = theme => ({
     root: {
         flexGrow: 1,
-    },
-    form: {
-        marginTop: '50px'
     },
     buttonContainer: {
         display: 'flex',
@@ -23,16 +21,40 @@ const styles = theme => ({
 
 class TournamentCreate extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            tournamentName: ''
+        }
+    }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
     render() {
         const { classes, create } = this.props;
     
         return (
             <div className={classes.root}>
-                <Paper className={classes.form}>
+                <Paper>
                     <Typography align='center'>Create a New Tournament!</Typography>
                     <br />
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <TextField
+                        align='center'
+                        id="tournamentName"
+                        label="Tournament Name"
+                        className={classNames(classes.tournamentName)}
+                        value={this.state.tournamentName}
+                        onChange={this.handleChange('tournamentName')}
+                        margin="normal"
+                        />
+                    </div>
                     <div className={classes.buttonContainer}>
-                        <Button variant="raised" color="inherit" className={classes.button} onClick={ create }>
+                        <Button variant="raised" color="inherit" className={classes.button} onClick={() => create(this.state.tournamentName) }>
                             Create
                         </Button>
                     </div>

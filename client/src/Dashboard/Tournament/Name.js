@@ -14,10 +14,12 @@ const styles = theme => ({
 });
 
 class TournamentName extends React.Component {
-  
-    state = {
-      tournamentName: 'My Tourney!',
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+          tournamentName: props.name,
+        };
+    } 
     
     handleChange = name => event => {
         this.setState({

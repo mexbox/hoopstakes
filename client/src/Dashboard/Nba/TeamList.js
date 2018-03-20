@@ -31,19 +31,11 @@ class NbaTeamList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            teams: false,
-            activeTeams: 'east',
+            activeTeams: props.activeTeams,
         };
     }
-    componentWillReceiveProps(nextProps) {
-        if( nextProps != this.props ) {
-            this.setActiveTeams(nextProps.conference);
-        }
-    }
-
-    setActiveTeams = (tab) => {
-        const conference = tab === 0 ? 'east' : 'west';
-        this.setState({activeTeams: this.state.teams[conference] })
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({activeTeams: nextProps.activeTeams});
     }
 
     getTeamLogo = (name) => {
@@ -54,17 +46,9 @@ class NbaTeamList extends React.Component {
         }
         return teamLogos[shortName] || '';
     }
-
-    getTeams = (conference) => {
-        console.log(this.state.teams);
-        console.log(conference);
-        if( conference === 0){
-            return this
-        }
-    }
     
     render() {
-        const { conference, classes } = this.props;
+        const { classes } = this.props;
         const { activeTeams } = this.state;
     
         return (
@@ -74,7 +58,7 @@ class NbaTeamList extends React.Component {
                     return (
                         <ExpansionPanel key={team.name}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                { team.logo && <img src={team.logo} className={classNames(classes.teamLogo)} /> }
+                                { team.logo && <img src={team.logo} alt={`${team.name} Logo`} className={classNames(classes.teamLogo)} /> }
                                 <Typography className={classNames(classes.teamName)}>{team.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>

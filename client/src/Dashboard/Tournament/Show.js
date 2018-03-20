@@ -10,13 +10,20 @@ const styles = theme => ({
 
 });
 class TournamentShow extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: props.tourney.name
+        }
+    } 
 
     render() {
-        const { classes } = this.props;
+        const { name } = this.state;
+        const { nbaTeams } = this.props;
         return (
             <div>
-                <TournamentName />
-                <ConferenceSelector />
+                <TournamentName name={name} />
+                <ConferenceSelector nbaTeams={nbaTeams} />
             </div>
         )
     }
