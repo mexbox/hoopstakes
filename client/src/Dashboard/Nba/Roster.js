@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
+import NbaPlayer from './Player';
+
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
@@ -30,37 +32,51 @@ const styles = theme => ({
 
 class NbaRoster extends React.Component {
 
+    state = {
+        activePlayer: false
+    }
+
     getLastName = (name) => {
         const nameArr = name.split(' ');        
         nameArr.shift()
         return nameArr.join(' ');
     }
 
+    viewPlayer = (player) => {
+        this.setState({activePlayer: player});
+        console.log(this.state);
+    }
+
+
     render() { 
         const { classes, team } = this.props;
+        const { activePlayer } = this.state;
         
         return (
                 <div className={classes.root}>
-                <GridList className={classes.gridList} cols={3} >
-                {team.NbaPlayers.map(player => (
-                    <GridListTile key={player.imgUrl}>
-                            <img src={player.imgUrl} alt={player.name} className={classes.playerImg} />
-                            <GridListTileBar
-                                title={this.getLastName(player.name)}
-                                classes={{
-                                root: classes.titleBar,
-                                title: classes.title,
-                                }}
-                                actionIcon={
-                                <IconButton>
-                                    <MoreVertIcon className={classes.title} />
-                                </IconButton>
-                                }
-                            />
-                    </GridListTile>
-                ))}
-                </GridList>
-                </div>
+                {activePlayer && <NbaPlayer player={activePlayer} />}
+                {!activePlayer && 
+                    <GridList className={classes.gridList} cols={3} >
+                    {team.NbaPlayers.map(player => (
+                        <GridListTile key={player.imgUrl}>
+                                <img src={player.imgUrl} alt={player.name} className={classes.playerImg} />
+                                <GridListTileBar
+                                    title={this.getLastName(player.name)}
+                                    classes={{
+                                    root: classes.titleBar,
+                                    title: classes.title,
+                                    }}
+                                    actionIcon={
+                                    <IconButton onClick={() => this.viewPlayer(player)}>
+                                        <MoreVertIcon className={classes.title} />
+                                    </IconButton>
+                                    }
+                                />
+                        </GridListTile>
+                    ))}
+                    </GridList>
+                }
+                </div>  
         )
     }
 }
