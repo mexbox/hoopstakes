@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock';
 import history from '../history';
+import Logo from '../assets/images/logo.png';
 
 export default class Auth {
   lock = new Auth0Lock('Q-BwLO1VCJGSPWuY5SQlpCWjTzjzDMob', 'hoopstakes.auth0.com', {
@@ -11,6 +12,10 @@ export default class Auth {
       params: {
         scope: 'openid profile'
       }
+    },
+    theme: {
+      logo: Logo,
+      primaryColor: '#9e9e9e'
     },
     languageDictionary: {
       title: "Hoopstakes"

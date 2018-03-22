@@ -5,10 +5,13 @@ import Typography from 'material-ui/Typography';
 
 const styles = {
   root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    backgroundColor: '#303030',
     height: '100vh',
     paddingTop:'5%'
   },
+  title: {
+    color: 'white'
+  }
 };
 
 class Landing extends Component {
@@ -16,12 +19,12 @@ class Landing extends Component {
     render() {
       return (
         <div style={{textAlign: 'center'}} className={this.props.classes.root}>
-          <Typography variant="title" color="inherit" noWrap>Hoopstakes</Typography>
+          <Typography className={this.props.classes.title} variant="title" noWrap>Hoopstakes</Typography>
           <div>
             <img alt="basketball-fail" src="https://media1.tenor.com/images/e5b8c650ed7911a48b6d0242f326f73c/tenor.gif" />
           </div>
 
-          <Button variant="raised" color="primary" aria-label="login" onClick={this.props.logIn}>Log In</Button>
+          <Button variant="raised" color="primary" aria-label="login" onClick={this.props.logIn}>Play</Button>
         </div>
       );
     }
