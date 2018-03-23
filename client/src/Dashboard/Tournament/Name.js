@@ -31,16 +31,14 @@ class TournamentName extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div>
-                <TextField
-                  id="tournamentName"
-                  label="Tournament Name"
-                  className={classNames(classes.tournamentName)}
-                  value={this.state.tournamentName}
-                  onChange={this.handleChange('tournamentName')}
-                  margin="normal"
-                />
-            </div>
+            <TextField
+                id="tournamentName"
+                label="Tournament Name"
+                className={classNames(classes.tournamentName)}
+                value={this.state.tournamentName}
+                onChange={this.handleChange('tournamentName')}
+                margin="normal"
+            />
         );
     }
 }
