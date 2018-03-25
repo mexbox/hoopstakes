@@ -10,6 +10,7 @@ var connection = require('./models/dbConnection');
 var users = require('./routes/users');
 var nbaTeams = require('./routes/nbaTeams');
 var tournaments = require('./routes/tournaments');
+var nbaGames = require('./routes/nbaGames');
 
 var app = express();
 // view engine setup
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/users', users);
 app.use('/api/nba-teams', nbaTeams);
 app.use('/api/tournaments', tournaments);
+app.use('/api/nba-games', nbaGames);
 
 //React App
 app.get('*', (req, res) => {

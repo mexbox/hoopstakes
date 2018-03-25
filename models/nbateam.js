@@ -20,6 +20,20 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  NbaTeam.associate = (models) => {
+    NbaTeam.hasMany(models.NbaGame, {
+      sourceKey: 'id',
+      foreignKey: 'homeTeamId'
+    });
+  };
+
+  NbaTeam.associate = (models) => {
+    NbaTeam.hasMany(models.NbaGame, {
+      sourceKey: 'id',
+      foreignKey: 'awayTeamId'
+    });
+  };
+
   NbaTeam.getTeamsByConference = async (conference, includePlayers) => {
     const query = {
       where: {
