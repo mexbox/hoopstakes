@@ -8,8 +8,17 @@ const ParticipantModel = models.Participants;
 
 var debug = require('debug')('hoopstakes:tournaments');
 
-const Tournaments = {
-    get: async (req, res) => {
+const Tournaments = { 
+   getAll: async (req, res) =>{
+    try{
+      const allTeams = await TeamModel.getAllTeams();
+      return res.status(201).send(allTeams);
+    } catch (error) {
+      debug(error);
+      return res.status(400).send(error);
+    }
+   },
+   get: async (req, res) => {
         try{
           const east = await TeamModel.getTeamsByConference('east', PlayerModel);
           const west = await TeamModel.getTeamsByConference('west', PlayerModel);

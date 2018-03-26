@@ -54,5 +54,16 @@ module.exports = (sequelize, DataTypes) => {
     return await NbaTeam.findAll(query);
   }
 
+  NbaTeam.getAllTeams = async() =>
+  {
+    const query = {
+      order: [
+        ['id','ASC'],
+      ],
+    };
+
+    return await NbaTeam.findAll(query);
+  };
+
   return NbaTeam;
 };

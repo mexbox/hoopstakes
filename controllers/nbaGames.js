@@ -1,14 +1,20 @@
-const nbaTeam = require('../models/NbaGame');
-const axios = require("axios");
+'use strict';
+
+const models = require('../models/dbConnection');
+const NbaGameModel = models.NbaGame;
+
 var debug = require('debug')('hoopstakes:nbaGames');
 
-module.exports = {
-  async list(req, res) {
-    try{
-      const games = await nbaGame.all();
-      return res.status(200).send(games);
-    }catch (error) {
-      return res.status(200).send(games);
-    }
-  }
+const Games = { 
+    getAll: async (req, res) =>{
+        try{
+          const allGames = await NbaGameModel.getAllGames();
+          return res.status(201).send(allGames);
+        } catch (error) {
+          debug(error);
+          return res.status(400).send(error);
+        }
+    },
 };
+
+module.exports = Games;
