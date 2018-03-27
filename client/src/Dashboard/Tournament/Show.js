@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles';
 
 import TournamentName from './Name';
 import ConferenceSelector from '../Nba/ConferenceSelector';
+import GameList from '../Nba/GameList';
+import ShowButton from './ShowBtn';
 
 const styles = theme => ({
 
@@ -13,17 +15,24 @@ class TournamentShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: props.tourney.name
+            name: props.tourney.name,
+            activeView: 'gameList'
         }
     } 
 
+    changeView = (view) => {
+        this.setState({activeView: view});
+    }
+
     render() {
-        const { name } = this.state;
-        const { nbaTeams } = this.props;
+        const { name, activeView } = this.state;
+        const { nbaTeams, gameDays } = this.props;
         return (
             <div>
                 <TournamentName name={name} />
-                <ConferenceSelector nbaTeams={nbaTeams} />
+                <ShowButton changeView={this.changeView.bind(this)} />
+                {activeView === 'teamList' && <ConferenceSelector nbaTeams={nbaTeams} />}
+                {activeView === 'gameList' && <GameList gameDays={gameDays} />}
             </div>
         )
     }

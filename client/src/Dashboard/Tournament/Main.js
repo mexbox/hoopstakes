@@ -24,6 +24,7 @@ class TournamentMain extends React.Component {
     render() {
         const { classes,
                 tournaments,
+                gameDays,
                 nbaTeams,
                 activeView,
                 activeTournament,
@@ -37,7 +38,7 @@ class TournamentMain extends React.Component {
                 <TournamentNavButton changeView={changeView.bind(this)} />
                 {activeView === 'create' && <TournamentCreate create={create.bind(this)} />}
                 {activeView === 'list' && <TournamentList show={show.bind(this)} tournaments={tournaments} />} 
-                {activeView === 'show' && <TournamentShow tourney={activeTournament} nbaTeams={nbaTeams} />}
+                {activeView === 'show' && <TournamentShow tourney={activeTournament} gameDays={gameDays} nbaTeams={nbaTeams} />}
             </div>
         );
     }

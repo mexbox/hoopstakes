@@ -53,6 +53,72 @@ class Layout extends React.Component {
     const data = await this.getTeams(userId);
     this.setState({tournaments: data.tourneys});
     this.setState({teams: data.teams});
+    //mock NBA games 
+    const gameDays = [
+      {
+        date: '2018-04-01',
+        games: [
+          {
+            homeTeamId:'1610612738',//celtics
+            awayTeamId:'1610612755',//sixers
+            status:'0',
+            id:'1',
+          },
+          {
+            homeTeamId:'1610612744',//warrios
+            awayTeamId:'1610612762',//jazz
+            status:'0',
+            id:'2',
+          }
+        ]
+      },
+      {
+        date: '2018-04-04',
+        games: [
+          {
+            homeTeamId:'1610612745',//rockets
+            awayTeamId:'1610612750',//twolves
+            status:'0',
+            id:'3',
+          },
+          {
+            homeTeamId:'1610612761',//raptors
+            awayTeamId:'1610612749',//bucks
+            status:'0',
+            id:'4',
+          }
+        ]
+      },
+      {
+        date: '2018-04-06',
+        games: [
+          {
+            homeTeamId:'1610612739',//cavs
+            awayTeamId:'1610612748',//heat
+            status:'0',
+            id:'5',
+          },
+          {
+            homeTeamId:'1610612759',//spurs
+            awayTeamId:'1610612760',//thunder
+            status:'0',
+            id:'6',
+          }
+        ]
+      },
+    ]
+    const teams = data.teams.east.concat(data.teams.west);
+    gameDays.forEach( (day) => {
+      day.games.forEach( (game) => {
+        game.homeTeam = teams.find( (team) => {
+          return team.nbaStatId == game.homeTeamId;
+        });
+        game.awayTeam = teams.find( (team) => {
+          return team.nbaStatId == game.awayTeamId;
+        })
+      });
+    });
+    this.setState({gameDays: gameDays});
     this.setState({activeView: !this.state.tournaments.length ? 'create' : 'list'});
     this.setState({loading: false});
   }
@@ -120,6 +186,7 @@ class Layout extends React.Component {
   render() {
     const { classes } = this.props;
     const {
+            gameDays,
             loading,
             tournaments,
             activeView,
@@ -134,6 +201,7 @@ class Layout extends React.Component {
           <main className={classNames(classes.content)}>
             {loading && <Callback />}
             {!loading && <TournamentMain
+                            gameDays={gameDays}
                             nbaTeams={teams} 
                             activeView={activeView} 
                             tournaments={tournaments}
