@@ -18,16 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'nbaStatId',
       foreignKey: 'nbaTeamStatId'
     });
-  };
-
-  NbaTeam.associate = (models) => {
     NbaTeam.hasMany(models.NbaGame, {
-      sourceKey: 'id',
-      foreignKey: 'homeTeamId'
+          sourceKey: 'id',
+          foreignKey: 'homeTeamId'
     });
-  };
-
-  NbaTeam.associate = (models) => {
     NbaTeam.hasMany(models.NbaGame, {
       sourceKey: 'id',
       foreignKey: 'awayTeamId'
