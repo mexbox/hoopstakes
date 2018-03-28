@@ -51,16 +51,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
     
-    for (let i = 0; datesObj.length < i; i++) {
-      debug(datesObj);
-      // debug(datesObj);
-      // gamesArray.push({
-      //   date : `${date}`,
-      //   games : datesObj[`${date}`]
-      // });
+    for (let date in datesObj) {
+      gamesArray.push({
+        date : date,
+        games : datesObj[date]
+      });
     }
 
-    return datesObj;
+    return gamesArray;
 
   };
 
