@@ -24,3 +24,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: hoopstakes
+  frontend:
+    build: ./client/
+    volumes:
+      - ./client/public:/opt/app/public
+      - ./client/src:/opt/app/src
+    ports:
+      - "3000:3000"
