@@ -3,8 +3,7 @@
 const models = require('../models/dbConnection');
 const TeamModel = models.NbaTeam;
 const TournamentModel = models.Tournament;
-const PlayerModel = models.NbaPlayer;
-const ParticipantModel = models.Participants;
+const NbaGameModel = models.NbaGame;
 
 var debug = require('debug')('hoopstakes:tournaments');
 
@@ -20,11 +19,10 @@ const Tournaments = {
    },
    get: async (req, res) => {
         try{
-          const east = await TeamModel.getTeamsByConference('east', PlayerModel);
-          const west = await TeamModel.getTeamsByConference('west', PlayerModel);
-          const tourneys = await TournamentModel.findTourneysByUser(req.query.userId, ParticipantModel);
-          const teams = { east, west };
-          const tourneyInfo = {tourneys, teams};
+          const tourneys = await TournamentModel.findTourneysByUser(req.query.userId);
+          const teams = await TeamModel.getTeamsWithPlayers();
+          const gameDays = await NbaGameModel.getGamesByDay(teams);
+          const tourneyInfo = {tourneys, teams, gameDays};
           return res.status(201).send(tourneyInfo);
         } catch (error) {
           debug(error);
@@ -34,7 +32,7 @@ const Tournaments = {
     create: async(req, res) => {
       try{
         await TournamentModel.newTourney(req.body, ParticipantModel);
-        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId, ParticipantModel);
+        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId);
         return res.status(200).send(tourneys);
       }catch(e){
         console.log(e);
@@ -43,7 +41,7 @@ const Tournaments = {
     update: async(req, res) => {
       try{
         await TournamentModel.updateTourney(req.body, ParticipantModel);
-        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId, ParticipantModel);
+        const tourneys = await TournamentModel.findTourneysByUser(req.body.userId);
         return res.status(200).send(tourneys);
       }catch(e){
         return res.status(401).send(e);
