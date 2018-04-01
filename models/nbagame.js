@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
   NbaGame.getAllGames = async() => {
     const query = {
-      attributes: ['homeTeamId', 'awayTeamId', 'gameDate', 'status', [sequelize.fn('DATE', sequelize.col('gameDate')), 'formattedDate']],
+      attributes: ['id', 'homeTeamId', 'awayTeamId', 'gameDate', 'status', [sequelize.fn('DATE', sequelize.col('gameDate')), 'formattedDate']],
       order: [
         ['gameDate','ASC']
       ]
