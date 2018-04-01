@@ -2,13 +2,12 @@
 var debug = require('debug')('hoopstakes:models:nbagame');
 
 module.exports = (sequelize, DataTypes) => {
-  var NbaGame = sequelize.define('NbaGame', {
+  const NbaGame = sequelize.define('NbaGame', {
     homeTeamId: DataTypes.INTEGER,
     awayTeamId: DataTypes.INTEGER,
     status: DataTypes.INTEGER,
     stats: DataTypes.JSON,
-    gameDate: DataTypes.DATE,
-    formattedDate: DataTypes.DATE
+    gameDate: DataTypes.DATE
   });
 
   NbaGame.associate = (models) => {
@@ -24,34 +23,37 @@ module.exports = (sequelize, DataTypes) => {
       });
   };
 
-  NbaGame.getAllGames = async(NbaTeams) =>
-  {
+  NbaGame.getAllGames = async() => {
     const query = {
-      attributes: ['gameDate', 'status', [sequelize.fn('DATE', sequelize.col('gameDate')), 'formattedDate']],
+      attributes: ['homeTeamId', 'awayTeamId', 'gameDate', 'status', [sequelize.fn('DATE', sequelize.col('gameDate')), 'formattedDate']],
       order: [
-        ['id','ASC'],
-      ],
-      include: [{ model: NbaTeams, as: 'awayTeam', required: true},{ model: NbaTeams, as: 'homeTeam', required: true}],
+        ['gameDate','ASC']
+      ]
     };
-
     return await NbaGame.findAll(query);
   };
 
-  NbaGame.getGamesByDay = async(NbaTeams) =>
-  {
-    const games = await NbaGame.getAllGames(NbaTeams);
+  NbaGame.getGamesByDay = async(teams) => {
+    const games = await NbaGame.getAllGames();
     const datesObj = {};
     const gamesArray = [];
     
     games.forEach((game, index) => {
-      if(game.formattedDate in datesObj) {
-        datesObj[game.formattedDate].push(game);
+      const gameDate = game.get('formattedDate')
+      game.setDataValue('awayTeam', teams.find((team) => {
+        return team.id === game.awayTeamId
+      }));
+      game.setDataValue('homeTeam', teams.find((team) => {
+        return team.id === game.homeTeamId
+      }));
+      if(gameDate in datesObj) {
+        datesObj[gameDate].push(game);
       }else{
-        datesObj[game.formattedDate] = [game];
+        datesObj[gameDate] = [game];
       }
     });
     
-    for (let date in datesObj) {
+    for (const date in datesObj) {
       gamesArray.push({
         date : date,
         games : datesObj[date]
@@ -59,7 +61,6 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     return gamesArray;
-
   };
 
   return NbaGame;
