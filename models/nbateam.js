@@ -28,6 +28,26 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  NbaTeam.getTeamsWithPlayers = async () => {
+    const query = {
+      where: {
+        rank: {
+          [Op.lte]: 8 //hardcoded to only pull playoff teams
+        }
+      },
+      order: [
+        ['rank','ASC'],
+        [sequelize.fn('json_extract', sequelize.col('NbaPlayers.stats'), '$.ppg'), 'DESC']
+      ],
+      include:  [{
+        model: sequelize.models.NbaPlayer,
+        required: true,
+      }]
+    };
+
+    return await NbaTeam.findAll(query);
+  }
+
   NbaTeam.getTeamsByConference = async (conference, includePlayers) => {
     const query = {
       where: {
