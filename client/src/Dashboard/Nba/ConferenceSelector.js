@@ -4,16 +4,21 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import NbaTeamList from './TeamList';
 
 class ConferenceSelector extends React.Component {
-    state = {
-        conference: 0,
-        activeTeams: this.props.nbaTeams['east']
-    };
+
+    componentWillMount = () => {
+        this.setState({activeTeams: this.filterTeams(this.props.nbaTeams, 'east')});
+        this.setState({conference: 0 });
+    }
 
     handleChange = (event, value) => {
-        const conferenceName = value === 0 ? 'east' : 'west';
-        this.setState({activeTeams: this.props.nbaTeams[conferenceName] });
+        const conference = value === 0 ? 'east' : 'west';
+        this.setState({activeTeams: this.filterTeams(this.props.nbaTeams, conference)});
         this.setState({conference: value });
     };
+
+    filterTeams = (teams, conference) => {
+        return teams.filter((team) => team.conference === conference);
+    }
 
     render() {
         const { conference, activeTeams } = this.state;
