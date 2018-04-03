@@ -22,12 +22,12 @@ lsof -i tcp:[PORT_NUMBER] # check if that still in use
 
 ### Migrations & Seeding DB
 
-You can easily populate the DB with basic require data to run the app via CLI commands:
+You can easily populate the DB with basic data required to run the app via CLI commands:
 
 ```bash
-node node_modueles/.bin/sequelize db:migrate #runs all db migrations
-node node_modueles/.bin/sequelize db:migrate:undo #reverts the last migration
-node node_modueles/.bin/sequelize db:migrate:undo:all #reverts all migrations
+node node_modules/.bin/sequelize db:migrate #runs all db migrations
+node node_modules/.bin/sequelize db:migrate:undo #reverts the last migration
+node node_modules/.bin/sequelize db:migrate:undo:all #reverts all migrations
 
-node node_modueles/.bin/sequelize db:migrate:seed:all #seeds the db
+node node_modules/.bin/sequelize db:migrate:seed:all #seeds the db
 ```
