@@ -6,7 +6,7 @@ export default class Auth {
   lock = new Auth0Lock('Q-BwLO1VCJGSPWuY5SQlpCWjTzjzDMob', 'hoopstakes.auth0.com', {
     autoclose: true,
     auth: {
-      redirectUrl: 'http://localhost:3000/callback',
+      redirectUrl: `${window.location.origin}/callback`,
       responseType: 'token id_token',
       audience: 'https://api.hoopestakes.com',
       params: {
